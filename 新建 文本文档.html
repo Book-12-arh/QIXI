@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七夕·爱的告白</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        love: {
+                            pink: '#FF7EB9',
+                            purple: '#A78BFA',
+                            blue: '#818CF8',
+                            gold: '#FBBF24',
+                        }
+                    },
+                    fontFamily: {
+                        romantic: ['"Dancing Script"', 'cursive', 'sans-serif'],
+                        main: ['"Noto Sans SC"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            .animate-float-slow {
+                animation: float 8s ease-in-out infinite;
+            }
+            .animate-float-fast {
+                animation: float 4s ease-in-out infinite;
+            }
+            .animate-pulse-slow {
+                animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+    
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-main bg-gray-900 text-white min-h-screen overflow-x-hidden">
+    <!-- 星空背景 -->
+    <div id="stars" class="fixed inset-0 z-0"></div>
+    
+    <!-- 漂浮的爱心元素 -->
+    <div class="fixed inset-0 z-10 pointer-events-none overflow-hidden">
+        <div class="absolute top-1/4 left-1/5 text-love-pink text-3xl animate-float">
+            <i class="fa fa-heart"></i>
+        </div>
+        <div class="absolute top-1/3 right-1/4 text-love-purple text-2xl animate-float-slow">
+            <i class="fa fa-heart"></i>
+        </div>
+        <div class="absolute bottom-1/4 left-1/3 text-love-pink text-xl animate-float-fast">
+            <i class="fa fa-heart"></i>
+        </div>
+        <div class="absolute bottom-1/3 right-1/5 text-love-purple text-2xl animate-float">
+            <i class="fa fa-heart"></i>
+        </div>
+        <div class="absolute top-1/2 left-1/6 text-love-pink text-lg animate-float-slow">
+            <i class="fa fa-heart"></i>
+        </div>
+    </div>
+
+    <!-- 主内容容器 -->
+    <div class="relative z-20 container mx-auto px-4 py-16 md:py-24">
+        <!-- 页面标题 -->
+        <header class="text-center mb-12 md:mb-20">
+            <h1 class="font-romantic text-[clamp(2.5rem,6vw,4.5rem)] text-love-gold text-shadow-lg mb-4 animate-pulse-slow">
+                七夕·爱的告白
+            </h1>
+            <div class="w-32 h-1 bg-gradient-to-r from-love-pink to-love-purple mx-auto rounded-full"></div>
+            <p class="mt-6 text-gray-300 max-w-2xl mx-auto">
+                银河相隔，挡不住思念；时光流转，带不走深情。在这个特别的日子，我想对你说...
+            </p>
+        </header>
+        
+        <!-- 七夕日期倒计时 -->
+        <div class="text-center mb-16 md:mb-24">
+            <div class="inline-block bg-black/30 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-white/10">
+                <h2 class="font-romantic text-2xl md:text-3xl text-love-pink mb-4">
+                    <i class="fa fa-calendar mr-2"></i>七夕佳节
+                </h2>
+                <div id="countdown" class="grid grid-cols-4 gap-2 md:gap-4">
+                    <div class="bg-white/10 rounded-lg p-2 md:p-4">
+                        <div id="days" class="text-2xl md:text-4xl font-bold text-love-gold">00</div>
+                        <div class="text-xs md:text-sm text-gray-400">天</div>
+                    </div>
+                    <div class="bg-white/10 rounded-lg p-2 md:p-4">
+                        <div id="hours" class="text-2xl md:text-4xl font-bold text-love-gold">00</div>
+                        <div class="text-xs md:text-sm text-gray-400">时</div>
+                    </div>
+                    <div class="bg-white/10 rounded-lg p-2 md:p-4">
+                        <div id="minutes" class="text-2xl md:text-4xl font-bold text-love-gold">00</div>
+                        <div class="text-xs md:text-sm text-gray-400">分</div>
+                    </div>
+                    <div class="bg-white/10 rounded-lg p-2 md:p-4">
+                        <div id="seconds" class="text-2xl md:text-4xl font-bold text-love-gold">00</div>
+                        <div class="text-xs md:text-sm text-gray-400">秒</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 告白卡片 -->
+        <div class="max-w-4xl mx-auto bg-gradient-to-br from-black/50 to-love-purple/20 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-white/10 mb-16 transform transition-all duration-500 hover:shadow-love-pink/20 hover:shadow-xl">
+            <div class="relative h-64 md:h-80 overflow-hidden">
+                <img src="https://picsum.photos/id/1040/1200/600" alt="浪漫星空下的情侣" class="w-full h-full object-cover opacity-70">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10">
+                    <h2 class="font-romantic text-3xl md:text-4xl text-white text-shadow-lg">致我最爱的人</h2>
+                    <p class="text-gray-200 mt-2">
+                        <i class="fa fa-moon-o mr-2 text-love-gold"></i>于七夕之夜
+                    </p>
+                </div>
+            </div>
+            
+            <div class="p-6 md:p-10">
+                <div class="space-y-6 text-lg leading-relaxed">
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="100">
+                        亲爱的，
+                    </p>
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="300">
+                        当夜幕降临，星光点点，银河横跨天际，我总会想起你。就像牛郎织女跨越星河的思念，我的心也时刻牵挂着你。
+                    </p>
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="500">
+                        与你相遇，是我生命中最美的意外。你的笑容，像清晨的阳光，温暖我的心房；你的陪伴，如深夜的星辰，照亮我前行的路。
+                    </p>
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="700">
+                        每一个与你共度的瞬间，都成为我记忆中最珍贵的片段。无论是欢笑还是泪水，因为有你，都变得意义非凡。
+                    </p>
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="900">
+                        在这个特别的七夕，我想对你说：我爱你。
+                    </p>
+                    <p class="transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="1100">
+                        愿我们的爱，如同银河般永恒，跨越时间与距离，直到永远。
+                    </p>
+                    <p class="font-romantic text-2xl text-love-pink transform translate-y-8 opacity-0 transition-all duration-1000" data-delay="1300">
+                        永远爱你的人
+                    </p>
+                </div>
+                
+                <!-- 互动按钮 -->
+                <div class="mt-10 text-center">
+                    <button id="loveButton" class="bg-gradient-to-r from-love-pink to-love-purple hover:from-love-purple hover:to-love-pink text-white font-medium py-3 px-8 rounded-full shadow-lg transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-love-pink/50">
+                        <i class="fa fa-heart mr-2"></i>点击这里，告诉我你的心意
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 爱情记忆 -->
+        <div class="max-w-5xl mx-auto mb-16">
+            <h2 class="font-romantic text-3xl md:text-4xl text-center text-love-gold mb-10">
+                我们的美好回忆
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div class="rounded-xl overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-love-pink/20">
+                    <img src="https://picsum.photos/id/1025/600/400" alt="第一次约会的地方" class="w-full h-56 object-cover">
+                    <div class="p-4 bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-romantic text-xl text-love-pink">第一次约会</h3>
+                        <p class="text-sm text-gray-300 mt-1">那个阳光明媚的午后，我们初次相遇...</p>
+                    </div>
+                </div>
+                
+                <div class="rounded-xl overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-love-pink/20">
+                    <img src="https://picsum.photos/id/1039/600/400" alt="一起旅行的风景" class="w-full h-56 object-cover">
+                    <div class="p-4 bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-romantic text-xl text-love-pink">一起旅行</h3>
+                        <p class="text-sm text-gray-300 mt-1">那些看过的风景，因为有你而更美丽...</p>
+                    </div>
+                </div>
+                
+                <div class="rounded-xl overflow-hidden shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-love-pink/20">
+                    <img src="https://picsum.photos/id/1062/600/400" alt="庆祝特殊日子" class="w-full h-56 object-cover">
+                    <div class="p-4 bg-black/40 backdrop-blur-sm">
+                        <h3 class="font-romantic text-xl text-love-pink">温馨时刻</h3>
+                        <p class="text-sm text-gray-300 mt-1">每一个值得纪念的瞬间，都有你的陪伴...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 爱情誓言 -->
+        <div class="max-w-3xl mx-auto text-center mb-16">
+            <div class="relative">
+                <div class="absolute -top-6 -left-6 text-love-pink text-4xl opacity-50">
+                    <i class="fa fa-quote-left"></i>
+                </div>
+                <p class="font-romantic text-2xl md:text-3xl text-gray-100 leading-relaxed py-6 px-4">
+                    我愿与你，从心动到古稀，从初见至白头，
+                    四季更迭，岁月流转，爱意不变。
+                </p>
+                <div class="absolute -bottom-6 -right-6 text-love-pink text-4xl opacity-50">
+                    <i class="fa fa-quote-right"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部 -->
+        <footer class="text-center text-gray-400 text-sm pt-8 border-t border-white/10">
+            <p>
+                <i class="fa fa-heart text-love-pink mr-1"></i>
+                愿天下有情人终成眷属
+                <i class="fa fa-heart text-love-pink ml-1"></i>
+            </p>
+            <p class="mt-2">七夕节快乐 © 2023</p>
+        </footer>
+    </div>
+    
+    <!-- 弹出的爱心模态框 -->
+    <div id="loveModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-gradient-to-br from-love-purple/20 to-love-pink/20 backdrop-blur-md rounded-2xl p-8 max-w-md w-full mx-4 border border-white/10 transform scale-95 transition-transform duration-300">
+            <h3 class="font-romantic text-3xl text-center text-love-gold mb-6">我也爱你！</h3>
+            <p class="text-center mb-8">
+                你的告白让我很感动，我愿意和你一起度过每一个七夕节。
+            </p>
+            <div class="flex justify-center">
+                <button id="closeModal" class="bg-white/10 hover:bg-white/20 text-white font-medium py-2 px-6 rounded-full transition-colors duration-300">
+                    <i class="fa fa-heart mr-1 text-love-pink"></i>确定
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 创建星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 150;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                const size = Math.random() * 3;
+                
+                star.style.position = 'absolute';
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.backgroundColor = 'white';
+                star.style.borderRadius = '50%';
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                star.style.opacity = Math.random();
+                star.style.animation = `pulse ${3 + Math.random() * 5}s infinite`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 七夕倒计时功能
+        function updateCountdown() {
+            // 今年七夕是8月22日
+            const qixiDate = new Date('2023-08-22T00:00:00');
+            const now = new Date();
+            const diff = qixiDate - now;
+            
+            // 如果已经过了今年七夕，计算明年的
+            if (diff < 0) {
+                qixiDate.setFullYear(qixiDate.getFullYear() + 1);
+                diff = qixiDate - now;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').innerText = days.toString().padStart(2, '0');
+            document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+        }
+        
+        // 文字渐入动画
+        function animateText() {
+            const textElements = document.querySelectorAll('[data-delay]');
+            
+            textElements.forEach(el => {
+                const delay = el.getAttribute('data-delay');
+                setTimeout(() => {
+                    el.style.transform = 'translateY(0)';
+                    el.style.opacity = '1';
+                }, delay);
+            });
+        }
+        
+        // 爱心点击交互
+        function setupLoveInteraction() {
+            const loveButton = document.getElementById('loveButton');
+            const loveModal = document.getElementById('loveModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            loveButton.addEventListener('click', () => {
+                loveModal.style.opacity = '1';
+                loveModal.style.pointerEvents = 'auto';
+                loveModal.querySelector('div').style.transform = 'scale(1)';
+                
+                // 创建随机漂浮的爱心
+                createFloatingHearts(15);
+            });
+            
+            closeModal.addEventListener('click', () => {
+                loveModal.style.opacity = '0';
+                loveModal.style.pointerEvents = 'none';
+                loveModal.querySelector('div').style.transform = 'scale(0.95)';
+            });
+        }
+        
+        // 创建漂浮的爱心
+        function createFloatingHearts(count) {
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.inset = '0';
+            container.style.pointerEvents = 'none';
+            container.style.zIndex = '60';
+            document.body.appendChild(container);
+            
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '<i class="fa fa-heart"></i>';
+                heart.style.position = 'absolute';
+                heart.style.color = i % 2 === 0 ? '#FF7EB9' : '#A78BFA';
+                heart.style.fontSize = `${10 + Math.random() * 20}px`;
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.top = '100%';
+                heart.style.animation = `floatUp ${3 + Math.random() * 4}s linear forwards`;
+                heart.style.animationDelay = `${Math.random() * 2}s`;
+                heart.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
+                
+                container.appendChild(heart);
+            }
+            
+            // 动画结束后移除容器
+            setTimeout(() => {
+                container.remove();
+            }, 8000);
+        }
+        
+        // 添加漂浮爱心的动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    transform: translateY(0) rotate(var(--rotation, 0deg));
+                    opacity: 1;
+                }
+                100% {
+                    transform: translateY(-100vh) rotate(var(--rotation, 0deg));
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            animateText();
+            setupLoveInteraction();
+        });
+    </script>
+</body>
+</html>
